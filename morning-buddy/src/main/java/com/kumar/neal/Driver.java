@@ -9,7 +9,7 @@ public class Driver {
 		new Driver().init();
 	}
 	
-	private void init() throws InterruptedException {
+	public void init() throws InterruptedException {
 		this.routeCalculation = new RouteCalculationTask();
 		this.weatherRemarks = new WeatherRemarksTask();
 		this.twilioInit = new TwilioInitializationTask();
