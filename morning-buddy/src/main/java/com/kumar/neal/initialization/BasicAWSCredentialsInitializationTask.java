@@ -7,7 +7,6 @@ public class BasicAWSCredentialsInitializationTask extends RetrievableTask<Basic
 	
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		this.obj = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
 					System.getenv("AWS_SECRET_ACCESS_KEY"));
 	}

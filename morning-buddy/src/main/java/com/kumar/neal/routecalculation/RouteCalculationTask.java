@@ -9,11 +9,10 @@ import com.kumar.neal.RetrievableTask;
  *
  */
 public class RouteCalculationTask extends RetrievableTask<Integer>{
-
+	
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		this.obj = Integer.MAX_VALUE;
 	}
-
+	
 }

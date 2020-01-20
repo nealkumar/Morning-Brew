@@ -15,7 +15,6 @@ public abstract class NonRetrievableTask implements Task{
 
 	@Override
 	public <T> T getVal() throws InterruptedException {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
 

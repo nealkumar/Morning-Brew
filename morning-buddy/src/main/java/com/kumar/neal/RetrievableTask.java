@@ -1,6 +1,6 @@
 package com.kumar.neal;
 
-public abstract class RetrievableTask<T> implements Task, Runnable{
+public abstract class RetrievableTask<T> implements Task{
 	
 	protected volatile T obj;
 	private java.util.concurrent.Semaphore objSem;
@@ -11,7 +11,6 @@ public abstract class RetrievableTask<T> implements Task, Runnable{
 
 	@Override
 	public final void run() {
-		// TODO Auto-generated method stub
 		System.out.println("Thread " 
 							+ Thread.currentThread().getId()
 							+ " is running...");
@@ -27,7 +26,6 @@ public abstract class RetrievableTask<T> implements Task, Runnable{
 	@Override 
 	@ThreadSafe
 	public final T getVal() throws InterruptedException {
-		// TODO Auto-generated method stub
 		this.objSem.acquire();
 		return obj;
 	}
