@@ -6,11 +6,11 @@ public abstract class RetrievableTask<T> implements Task, Runnable{
 	private java.util.concurrent.Semaphore objSem;
 	
 	protected RetrievableTask(){
-		this.objSem = new java.util.concurrent.Semaphore(0, true);
+		this.objSem = new java.util.concurrent.Semaphore(0, false);
 	}
 
 	@Override
-	public void run() {
+	public final void run() {
 		// TODO Auto-generated method stub
 		System.out.println("Thread " 
 							+ Thread.currentThread().getId()
@@ -22,11 +22,11 @@ public abstract class RetrievableTask<T> implements Task, Runnable{
 	protected abstract void execute();
 
 	/**
-	 * Blocks until obj of Type &lt?&gt is not null.
+	 * Blocks until {@link obj} of Type &lt?&gt is not null.
 	 */
-	@Override
+	@Override 
 	@ThreadSafe
-	public T getVal() throws InterruptedException {
+	public final T getVal() throws InterruptedException {
 		// TODO Auto-generated method stub
 		this.objSem.acquire();
 		return obj;
