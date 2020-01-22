@@ -22,6 +22,7 @@ public class Driver{
 	 * @throws InterruptedException
 	 */
 	public void init() throws InterruptedException {
+		long start = System.currentTimeMillis();
 		createTasks();
 		createThreads();
 		startThreads();
@@ -34,6 +35,8 @@ public class Driver{
 		String message = ResponseFactory.generateResponse(response);
 		
 		dispatchSNSText(message, credentials);
+		long end = System.currentTimeMillis();
+		System.out.println("Total execution time: " + (end-start));
 	}
 	
 	private void createTasks() {

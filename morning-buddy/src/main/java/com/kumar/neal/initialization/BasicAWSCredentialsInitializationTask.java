@@ -7,8 +7,8 @@ public class BasicAWSCredentialsInitializationTask extends RetrievableTask<Basic
 	
 	@Override
 	protected void execute() {
-		this.obj = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
-					System.getenv("AWS_SECRET_ACCESS_KEY"));
+		this.obj = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID_"),
+					System.getenv("AWS_SECRET_ACCESS_KEY_"));
 	}
 
 }
