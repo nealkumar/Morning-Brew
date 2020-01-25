@@ -23,6 +23,7 @@ public abstract class RetrievableTask<T> implements Task{
 	/**
 	 * Blocks until {@link obj} of Type &lt?&gt is not null.
 	 */
+	@SuppressWarnings("unchecked")
 	@Override 
 	@ThreadSafe
 	public final T getVal() throws InterruptedException {

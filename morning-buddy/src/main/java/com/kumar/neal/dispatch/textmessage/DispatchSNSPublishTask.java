@@ -7,11 +7,10 @@ import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
-import com.kumar.neal.NonRetrievableTask;
 import com.kumar.neal.RetrievableTask;
 import com.kumar.neal.Task;
 
-public class DispatchSNSPublishTask extends NonRetrievableTask {
+public class DispatchSNSPublishTask extends RetrievableTask<String> {
 
 	private String message;
 	private AWSCredentials credentials;
@@ -41,9 +40,12 @@ public class DispatchSNSPublishTask extends NonRetrievableTask {
 		
 		PublishRequest request = this.getPublishRequest(this.publishRequestBuilderTask);
 		AmazonSNS snsClient = this.getAmazonSns(this.snsBuilderTask);
+		this.obj = "Message dispatching failure.";
+//		PublishRequest request = this.publishRequest();
+//		AmazonSNS snsClient = this.snsBuilder();
 
 		PublishResult result = snsClient.publish(request);
-		System.out.println("Text message successfully dispatched. ID = " + result.getMessageId());
+		this.obj = "Message successfully dispatched. ID = " + result.getMessageId();
 	}
 	
 	private AmazonSNS getAmazonSns(Task t) {
@@ -66,6 +68,19 @@ public class DispatchSNSPublishTask extends NonRetrievableTask {
 		System.out.println("Publish Request issue... See: ~/dispatch.textmessage.DispatchSNSPublishTask.java");
 		return new PublishRequest();
 	}
+	
+//	private AmazonSNS snsBuilder() {
+//		return AmazonSNSClientBuilder.standard()
+//				.withRegion(Regions.US_EAST_1)
+//				.withCredentials(new AWSStaticCredentialsProvider(credentials))
+//				.build();
+//	}
+//	
+//	private PublishRequest publishRequest() {
+//		return new PublishRequest()
+//				.withMessage(message)
+//				.withPhoneNumber(System.getenv("TWILIO_TO_PHONE"));
+//	}
 	
 	private class SNSBuilderTask extends RetrievableTask<AmazonSNS>{
 		@Override

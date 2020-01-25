@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RestController
 public final class ApiController {
 	
-	@RequestMapping(method = RequestMethod.GET, value="/weather")
+	@RequestMapping(method = RequestMethod.GET, value="/weather", produces="application/json")
 	@ResponseStatus(HttpStatus.OK)
 	public String getWeather() {
 		return WeatherFactory.generateWeatherRemarks();

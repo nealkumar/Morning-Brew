@@ -1,0 +1,1 @@
+Top-level directory for the Morning Buddy agent service adapters.

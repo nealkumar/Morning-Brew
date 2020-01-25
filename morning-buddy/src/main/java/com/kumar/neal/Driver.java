@@ -4,15 +4,13 @@ import com.amazonaws.auth.AWSCredentials;
 import com.kumar.neal.dispatch.Response;
 import com.kumar.neal.dispatch.ResponseFactory;
 import com.kumar.neal.dispatch.textmessage.DispatchSNSPublishTask;
-import com.kumar.neal.dispatch.textmessage.DispatchTextTask;
 import com.kumar.neal.initialization.BasicAWSCredentialsInitializationTask;
-import com.kumar.neal.initialization.TwilioInitializationTask;
-import com.kumar.neal.routecalculation.RouteCalculationTask;
-import com.kumar.neal.weather.WeatherRemarksTask;
+import com.kumar.neal.service_tasks.traffic.RouteCalculationRetrievalTask;
+import com.kumar.neal.service_tasks.weather.WeatherRemarksRetrievalTask;
 
 public class Driver{
 	
-	private Task routeCalculation, weatherRemarks, initializeAWSCreds, dispatchSNS;
+	private Task routeCalculation, weatherRemarks, initializeAWSCreds, dispatchSNS; 
 	private Thread rct, wrt, dst, bacit;
 	
 	public static void main(String[] args) throws InterruptedException {
@@ -29,9 +27,6 @@ public class Driver{
 		createThreads();
 		startThreads();
 		
-		//Initialize twilio
-		//new Thread(new TwilioInitializationTask()).start();
-		
 		Integer calc = this.routeCalculation.getVal();
 		String remarks = this.weatherRemarks.getVal();
 		AWSCredentials credentials = this.initializeAWSCreds.getVal();
@@ -40,14 +35,15 @@ public class Driver{
 		String message = ResponseFactory.generateResponse(response);
 		
 		dispatchSNSText(message, credentials);
-		//new Thread(new DispatchTextTask(message)).start();
+		//this.dispatchSNS.doneSem.acquire();
 		long end = System.currentTimeMillis();
+		System.out.println("Text message status: " + this.dispatchSNS.getVal());
 		System.out.println("Total execution time: " + (end-start));
 	}
 	
 	private void createTasks() {
-		this.routeCalculation = new RouteCalculationTask();
-		this.weatherRemarks = new WeatherRemarksTask();
+		this.routeCalculation = new RouteCalculationRetrievalTask();
+		this.weatherRemarks = new WeatherRemarksRetrievalTask();
 		this.initializeAWSCreds = new BasicAWSCredentialsInitializationTask();
 	}
 	
@@ -78,6 +74,6 @@ public class Driver{
 		this.dispatchSNS = new DispatchSNSPublishTask(message, credentials);
 		dst = new Thread(this.dispatchSNS);
 		dst.start();
-		return;
+		//return;
 	}
 }
