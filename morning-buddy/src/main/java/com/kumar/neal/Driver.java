@@ -4,7 +4,9 @@ import com.amazonaws.auth.AWSCredentials;
 import com.kumar.neal.dispatch.Response;
 import com.kumar.neal.dispatch.ResponseFactory;
 import com.kumar.neal.dispatch.textmessage.DispatchSNSPublishTask;
+import com.kumar.neal.dispatch.textmessage.DispatchTextTask;
 import com.kumar.neal.initialization.BasicAWSCredentialsInitializationTask;
+import com.kumar.neal.initialization.TwilioInitializationTask;
 import com.kumar.neal.routecalculation.RouteCalculationTask;
 import com.kumar.neal.weather.WeatherRemarksTask;
 
@@ -27,6 +29,9 @@ public class Driver{
 		createThreads();
 		startThreads();
 		
+		//Initialize twilio
+		//new Thread(new TwilioInitializationTask()).start();
+		
 		Integer calc = this.routeCalculation.getVal();
 		String remarks = this.weatherRemarks.getVal();
 		AWSCredentials credentials = this.initializeAWSCreds.getVal();
@@ -35,6 +40,7 @@ public class Driver{
 		String message = ResponseFactory.generateResponse(response);
 		
 		dispatchSNSText(message, credentials);
+		//new Thread(new DispatchTextTask(message)).start();
 		long end = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (end-start));
 	}
