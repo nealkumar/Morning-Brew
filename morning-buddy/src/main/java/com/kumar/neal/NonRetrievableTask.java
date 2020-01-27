@@ -3,7 +3,7 @@ package com.kumar.neal;
 public abstract class NonRetrievableTask implements Task{
 
 	@Override
-	public synchronized void run() {
+	public final synchronized void run() {
 		// TODO Auto-generated method stub
 		System.out.println("Thread " 
 				+ Thread.currentThread().getId()
@@ -14,7 +14,7 @@ public abstract class NonRetrievableTask implements Task{
 	protected abstract void execute();
 
 	@Override
-	public <T> T getVal() throws InterruptedException {
+	public final <T> T getVal() throws InterruptedException {
 		throw new UnsupportedOperationException();
 	}
 
